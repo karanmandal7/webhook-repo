@@ -138,7 +138,7 @@ npm run dev
 ---
 
 ## 📸 Screenshots
-*(Add screenshots of your UI here if possible!)*
+![alt text](image.png)
 
 ---
 
