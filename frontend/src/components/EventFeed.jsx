@@ -4,10 +4,12 @@ import EventItem from './EventItem';
 import './EventFeed.css';
 
 const EventFeed = () => {
+  // State for events, loading, and error
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  // Fetch events from the backend API
   const fetchEvents = async () => {
     try {
       const response = await axios.get('http://localhost:5000/events');
@@ -22,7 +24,7 @@ const EventFeed = () => {
   };
 
   useEffect(() => {
-    // Fetch events immediately
+    // Fetch events immediately on mount
     fetchEvents();
 
     // Set up polling every 15 seconds
@@ -32,6 +34,7 @@ const EventFeed = () => {
     return () => clearInterval(interval);
   }, []);
 
+  // Show loading spinner while fetching
   if (loading) {
     return (
       <div className="loading-container">
@@ -41,6 +44,7 @@ const EventFeed = () => {
     );
   }
 
+  // Show error message if fetch fails
   if (error) {
     return (
       <div className="error-container">
@@ -53,6 +57,7 @@ const EventFeed = () => {
     );
   }
 
+  // Render the event feed
   return (
     <div className="event-feed">
       <div className="feed-header">
@@ -70,6 +75,7 @@ const EventFeed = () => {
             <p>No events yet. Trigger some GitHub webhook events to see them here!</p>
           </div>
         ) : (
+          // Render each event using EventItem
           events.map((event) => (
             <EventItem key={event._id} event={event} />
           ))
